@@ -66,13 +66,13 @@ public class AccountController {
 
         //メール、パスワード、確認用パスワードがどれかひとつでも半角英数では無かった場合
         if (!isValidEmail || !isValidPass || !isValidPassForChec) {
-            model.addAttribute("sample", "半角英数を入力してください");
+            model.addAttribute("mailCheck", "半角英数を入力してください");
             return "createAccount";
         }
 
         //パスワードが一致していなかった場合
-        if (password != passwordForCheck) {
-            model.addAttribute("sample2", "パスワードが一致していません");
+        if (!(password.equals(passwordForCheck))) {
+            model.addAttribute("passwordCheck", "パスワードが一致していません");
             return "createAccount";
         }
 
@@ -83,9 +83,6 @@ public class AccountController {
         return "home";
     }
 
-    private void isValid() {
-        // TODO 自動生成されたメソッド・スタブ
-        //半角英数字であるかの確認
-    }
+
 
 }
