@@ -27,7 +27,8 @@
     <main>
         <h1>Home</h1>
         <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-
+      
+		<div>${noBook}</div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
@@ -49,6 +50,10 @@
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>
+                                <li class="book_title">${bookInfo.author}</li>
+                                <li class="book_title">${bookInfo.publisher}</li>
+                                <li class="book_title">${bookInfo.publishDate}</li>
+                                <li class="book_title">${bookInfo.thumbnail}</li>
                             </ul>
                         </div>
                     </c:forEach>
