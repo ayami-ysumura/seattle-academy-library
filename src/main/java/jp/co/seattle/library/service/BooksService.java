@@ -73,5 +73,13 @@ public class BooksService {
                 + "sysdate())";
 
         jdbcTemplate.update(sql);
+
+    }
+
+    public void deletingBook(int bookId) {
+
+        String sql = "delete from books where Id =" + bookId;
+        jdbcTemplate.update(sql);
+
     }
 }
