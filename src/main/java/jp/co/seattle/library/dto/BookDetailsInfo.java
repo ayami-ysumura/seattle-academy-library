@@ -11,7 +11,7 @@ import lombok.Data;
 @Configuration
 @Data
 public class BookDetailsInfo {
-
+    //青い部分はインスタンス変数名
     private int bookId;
 
     private String title;
@@ -20,23 +20,34 @@ public class BookDetailsInfo {
 
     private String publisher;
 
+    private String publishDate;
+
     private String thumbnailUrl;
 
     private String thumbnailName;
 
+    private String isbn;
 
+    private String description;
+
+    //コンストラクタ（タスク5関係あり）
     public BookDetailsInfo() {
 
     }
 
-    public BookDetailsInfo(int bookId, String title, String author, String publisher,
-            String thumbnailUrl, String thumbnailName) {
+    //bookdtailsinforowmapperでsetした奴らとここの赤が繋がってる（引数）
+    //コンストラクタ（タスク5は関係ない）
+    public BookDetailsInfo(int bookId, String title, String author, String publisher, String publishDate,
+            String thumbnailUrl, String thumbnailName, String isbn, String description) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
+        this.publishDate = publishDate;
         this.thumbnailUrl = thumbnailUrl;
         this.thumbnailName = thumbnailName;
+        this.isbn = isbn;
+        this.description = description;
     }
 
 }

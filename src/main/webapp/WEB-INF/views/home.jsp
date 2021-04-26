@@ -43,7 +43,7 @@
                                         <img class="book_noimg" src="resources/img/noImg.png">
                                     </c:if>
                                     <c:if test="${!empty bookInfo.thumbnail}">
-                                        <img class="book_noimg" src="${bookInfo.thumbnail}">
+                                        <img class="book_noimg" src="resources/img/noImg.png">
                                     </c:if>
                                 </a>
                             <input type="hidden" name="bookId" value="${bookInfo.bookId}">
@@ -53,7 +53,6 @@
                                 <li class="book_title">${bookInfo.author}</li>
                                 <li class="book_title">${bookInfo.publisher}</li>
                                 <li class="book_title">${bookInfo.publishDate}</li>
-                                <li class="book_title">${bookInfo.thumbnail}</li>
                             </ul>
                         </div>
                     </c:forEach>

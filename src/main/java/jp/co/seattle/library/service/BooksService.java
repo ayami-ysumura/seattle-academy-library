@@ -33,7 +33,8 @@ public class BooksService {
 
         // TODO 取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
-                "select id,title,author,publisher,publish_date,thumbnail_url from books order by title asc",
+                "select id,title,author,publisher,publish_date,thumbnail_url, isbn, description"
+                        + " from books order by title asc",
                 new BookInfoRowMapper());
 
         return getedBookList;
@@ -45,6 +46,7 @@ public class BooksService {
      * @param bookId 書籍ID
      * @return 書籍情報
      */
+    //BookDetailsInfoは型
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
@@ -64,17 +66,30 @@ public class BooksService {
      * @param bookInfo 書籍情報
      */
     public void registBook(BookDetailsInfo bookInfo) {
-
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+        //SQLと繋がってるところ（括弧内はSQLのカラム名と同じじゃなきゃ追加できない）
+        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,publish_date,isbn,description,reg_date,upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
                 + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
+                + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getPublishDate() + "','"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
                 + "sysdate(),"
                 + "sysdate())";
-
+        //SQLの内容をデータベースに投げる
         jdbcTemplate.update(sql);
 
     }
+
+    //登録した書籍情報を書籍登録画面（addbook.jsp）で表示するためにSQLからデータ情報を引き出す
+    public int newRegistBook() {
+
+        String sql = "select max(id) from books";
+
+        int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
+        return bookId;
+    }
+
 
     /**
      * 書籍を削除する

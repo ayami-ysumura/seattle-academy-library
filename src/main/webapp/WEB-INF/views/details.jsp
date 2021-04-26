@@ -41,7 +41,7 @@
                                 <img class="book_noimg" src="resources/img/noImg.png">
                             </c:if>
                             <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
-                            	<img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
+                            	<img class="book_noimg" src="resources/img/noImg.png">
                             </c:if>
                             <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                         </a>
@@ -59,6 +59,18 @@
                      <div>
                          <span>出版社</span>
                          <p>${bookDetailsInfo.publisher}</p>
+                     </div>
+                     <div>
+                         <span>出版日</span>
+                         <p>${bookDetailsInfo.publishDate}</p>
+                     </div>
+                     <div>
+                         <span>ISBN</span>
+                         <p>${bookDetailsInfo.isbn}</p>
+                     </div>
+                     <div>
+                         <span>書籍説明</span>
+                         <p>${bookDetailsInfo.description}</p>
                      </div>
                  </div>
             </div>
