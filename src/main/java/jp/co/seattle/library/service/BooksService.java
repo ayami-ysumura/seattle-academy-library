@@ -18,6 +18,10 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
  * 
  *  booksテーブルに関する処理を実装する
  */
+/**
+ * @author user
+ *
+ */
 @Service
 public class BooksService {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
@@ -58,6 +62,24 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+    /**
+     * 書籍の編集情報を更新する
+     * @param editBookInfo
+     */
+    public void editBook(BookDetailsInfo editBookInfo) {
+        String sql = "UPDATE books SET title='"
+                + editBookInfo.getTitle() + "',author='" + editBookInfo.getAuthor()
+                + "',publisher='" + editBookInfo.getPublisher()
+                + "',thumbnail_name='" + editBookInfo.getThumbnailName()
+                + "',thumbnail_url='" + editBookInfo.getThumbnailUrl()
+                + "',publish_date='" + editBookInfo.getPublishDate()
+                + "',upd_date=" + "sysdate()"
+                + ",isbn='" + editBookInfo.getIsbn()
+                + "',description='" + editBookInfo.getDescription()
+                + "'  WHERE id=" + editBookInfo.getBookId() + ";";
+        jdbcTemplate.update(sql);
+        
+    }
 
 
     /**
@@ -67,7 +89,7 @@ public class BooksService {
      */
     public void registBook(BookDetailsInfo bookInfo) {
         //SQLと繋がってるところ（括弧内はSQLのカラム名と同じじゃなきゃ追加できない）
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,publish_date,isbn,description,reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author,publisher,thumbnail_url,thumbnail_name,publish_date,isbn,description,reg_date,upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
                 + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getThumbnailUrl() + "','"
@@ -101,4 +123,5 @@ public class BooksService {
         jdbcTemplate.update(sql);
 
     }
+
 }
