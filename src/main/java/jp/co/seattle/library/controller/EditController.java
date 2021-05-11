@@ -140,6 +140,15 @@ public class EditController {
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
 
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
+        //貸出ステータス表示
+        int rent = booksService.getListInfo(bookId);
+        if (rent == 0) {
+            model.addAttribute("okRent", "貸し出し可");
+
+        } else {
+            model.addAttribute("noRent", "貸し出し中");
+
+        }
 
         //  詳細画面に遷移する
         return "details";

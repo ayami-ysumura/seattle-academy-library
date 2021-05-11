@@ -22,7 +22,7 @@ public class DetailsController {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
 
     @Autowired
-    private BooksService bookdService;
+    private BooksService booksService;
 
     /**
      * 詳細画面に遷移する
@@ -38,9 +38,23 @@ public class DetailsController {
             Model model) {
         // デバッグ用ログ
         logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
+        
+        //詳細情報表示のためのコード
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+        booksService.getListInfo(bookId);
+        
+        //        取得した書籍IDの数によって貸出ステータスを変える
+        int rent = booksService.getListInfo(bookId);
+        if (rent == 0) {
+            model.addAttribute("okRent", "貸し出し可");
 
-        model.addAttribute("bookDetailsInfo", bookdService.getBookInfo(bookId));
+        } else {
+            model.addAttribute("noRent", "貸し出し中");
+
+        }
+        
 
         return "details";
     }
+
 }

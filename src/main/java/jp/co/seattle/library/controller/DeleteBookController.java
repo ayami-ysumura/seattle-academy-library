@@ -22,7 +22,7 @@ public class DeleteBookController {
     final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
 
     @Autowired
-    private BooksService bookdservice;
+    private BooksService booksService;
     /**
      * 対象書籍を削除する
      *
@@ -39,8 +39,16 @@ public class DeleteBookController {
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
         //サービスクラスを使用するコード
-        bookdservice.deletingBook(bookId);
-        model.addAttribute("bookList", bookdservice.getBookList());
+        int rent = booksService.getListInfo(bookId);
+        if (rent == 0) {
+            booksService.deletingBook(bookId);
+            model.addAttribute("bookList", booksService.getBookList());
+
+        } else {
+            model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+            model.addAttribute("noRent", "貸し出し中");
+            return "details";
+        }
 
         return "home";
 

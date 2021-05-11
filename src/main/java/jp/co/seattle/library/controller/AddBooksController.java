@@ -136,6 +136,8 @@ public class AddBooksController {
         
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         
+        //貸出ステータス表示
+        model.addAttribute("okRent", "貸し出し可");
 
         //  詳細画面に遷移する
         return "details";
