@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.RentBookService;
 import jp.co.seattle.library.service.ThumbnailService;
 
 /**
@@ -31,6 +32,8 @@ public class EditController {
     //@Autowiredがいるとnewを使わずしてインスタンス化できる
     @Autowired
     private BooksService booksService;
+    @Autowired
+    private RentBookService rentBookService;
 
     @Autowired
     private ThumbnailService thumbnailService;
@@ -141,7 +144,7 @@ public class EditController {
 
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         //貸出ステータス表示
-        int rent = booksService.getListInfo(bookId);
+        int rent = rentBookService.getListInfo(bookId);
         if (rent == 0) {
             model.addAttribute("okRent", "貸し出し可");
 

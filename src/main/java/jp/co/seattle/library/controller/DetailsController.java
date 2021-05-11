@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.RentBookService;
 
 /**
  * 詳細表示コントローラー
@@ -23,6 +24,8 @@ public class DetailsController {
 
     @Autowired
     private BooksService booksService;
+    @Autowired
+    private RentBookService rentBookService;
 
     /**
      * 詳細画面に遷移する
@@ -41,10 +44,10 @@ public class DetailsController {
         
         //詳細情報表示のためのコード
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-        booksService.getListInfo(bookId);
+        rentBookService.getListInfo(bookId);
         
         //        取得した書籍IDの数によって貸出ステータスを変える
-        int rent = booksService.getListInfo(bookId);
+        int rent = rentBookService.getListInfo(bookId);
         if (rent == 0) {
             model.addAttribute("okRent", "貸し出し可");
 

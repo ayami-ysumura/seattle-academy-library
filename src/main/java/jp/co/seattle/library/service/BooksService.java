@@ -45,38 +45,6 @@ public class BooksService {
     }
 
     /**
-     * 貸出リスト内の書籍IDの数を取得
-     * 
-     * @param bookId
-     * @return 貸出情報
-     */
-    public int getListInfo(int bookId) {
-        String sql = "SELECT COUNT(*) FROM rent_books where book_id=" + bookId;
-        int getListedInfo = jdbcTemplate.queryForObject(sql, Integer.class);
-        return getListedInfo;
-    }
-
-    /**
-     * 書籍IDを貸出リストに追加
-     * 
-     * @param rentBookInfo
-     */
-    public void getRentInfo(BookDetailsInfo rentBookInfo) {
-        String sql = "INSERT INTO rent_books (book_id) VALUES (" + rentBookInfo.getBookId() + ")";
-        jdbcTemplate.update(sql);
-    }
-
-    /**
-     * 貸出リスト内の貸出書籍を削除
-     * 
-     * @param returnBookInfo
-     */
-    public void returnBook(BookDetailsInfo returnBookInfo) {
-        String sql = "delete from rent_books where book_id =" + returnBookInfo.getBookId();
-        jdbcTemplate.update(sql);
-    }
-
-    /**
      * 書籍IDに紐づく書籍詳細情報を取得する
      *
      * @param bookId 書籍ID
