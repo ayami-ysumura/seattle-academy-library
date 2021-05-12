@@ -36,7 +36,7 @@ public class RentBookService {
      * 
      * @param rentBookInfo
      */
-    public void rentInfo(BookDetailsInfo rentBookInfo) {
+    public void rentBook(BookDetailsInfo rentBookInfo) {
         String sql = "INSERT INTO rent_books (book_id) VALUES (" + rentBookInfo.getBookId() + ")";
         jdbcTemplate.update(sql);
     }

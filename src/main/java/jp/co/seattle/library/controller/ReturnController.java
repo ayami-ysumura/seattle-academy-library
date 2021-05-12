@@ -22,10 +22,11 @@ public class ReturnController {
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
+    
     /**
      * 書籍を返す
      * @param locale
-     * @param bookId
+     * @param bookId 書籍ID
      * @param model
      * @return
      */

@@ -43,7 +43,7 @@ public class RentBookController {
         //bookIdを貸出リストに追加
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
-            rentBookService.rentInfo(rentBookInfo);
+            rentBookService.rentBook(rentBookInfo);
         }
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
