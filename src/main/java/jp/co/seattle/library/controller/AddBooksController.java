@@ -26,11 +26,9 @@ import jp.co.seattle.library.service.ThumbnailService;
 @Controller //APIの入り口
 public class AddBooksController {
     final static Logger logger = LoggerFactory.getLogger(AddBooksController.class);
-
     //@Autowiredがいるとnewを使わずしてインスタンス化できる
     @Autowired
     private BooksService booksService;
-
     @Autowired
     private ThumbnailService thumbnailService;
 
@@ -39,7 +37,6 @@ public class AddBooksController {
     public String login(Model model) {
         return "addBook";
     }
-
     /**
      * 書籍情報を登録する
      * @param locale ロケール情報
@@ -67,8 +64,6 @@ public class AddBooksController {
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-       
-
         // パラメータで受け取った書籍情報をDtoに格納する。
         //bookInfoのフィールドがpivateだからsetする
         //インスタンス化。ピンクはインスタンス名。（クラス名　インスタンス名　＝new　コンストラクタ）
@@ -80,23 +75,17 @@ public class AddBooksController {
         bookInfo.setIsbn(isbn);
         bookInfo.setDescription(description);
         
-        
-
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
-
         if (!file.isEmpty()) {
             try {
                 // サムネイル画像をアップロード
                 String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
                 // URLを取得
                 String thumbnailUrl = thumbnailService.getURL(fileName);
-
                 bookInfo.setThumbnailName(fileName);
                 bookInfo.setThumbnailUrl(thumbnailUrl);
-
             } catch (Exception e) {
-
                 // 異常終了時の処理
                 logger.error("サムネイルアップロードでエラー発生", e);
                 model.addAttribute("bookDetailsInfo", bookInfo);
@@ -107,12 +96,10 @@ public class AddBooksController {
         //バリデーションチェック
         //ISBNが10または13桁の数字
         boolean isValidIsbn = isbn.matches("[0-9]{10}||[0-9]{13}");
-
         if (!isValidIsbn) {
             model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
             return "addBook";
         }
-
         //日付チェック8桁＆日付の数字が日付として成り立たないものをはじく
         try {
             DateFormat df = new SimpleDateFormat("yyyymmdd");
@@ -125,20 +112,14 @@ public class AddBooksController {
 
         // 書籍情報を新規登録する
         booksService.registBook(bookInfo);
-
         model.addAttribute("resultMessage", "登録完了");
-
         // TODO 登録した書籍の詳細情報を表示するように実装
         //bookdetailsinfo型の新しい変数作る
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(booksService.newRegistBook());
-        
-        
-        
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-        
-
+        //貸出ステータス表示
+        model.addAttribute("rentalStatus", "貸し出し可");
         //  詳細画面に遷移する
         return "details";
     }
-
 }

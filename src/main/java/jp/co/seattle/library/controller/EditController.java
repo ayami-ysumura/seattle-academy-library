@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.RentBookService;
 import jp.co.seattle.library.service.ThumbnailService;
 
 /**
@@ -31,7 +32,8 @@ public class EditController {
     //@Autowiredがいるとnewを使わずしてインスタンス化できる
     @Autowired
     private BooksService booksService;
-
+    @Autowired
+    private RentBookService rentBookService;
     @Autowired
     private ThumbnailService thumbnailService;
 
@@ -44,7 +46,6 @@ public class EditController {
         //        logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
         BookDetailsInfo beforeBookInfo = booksService.getBookInfo(bookId);
         model.addAttribute("bookDetailsInfo", beforeBookInfo);
-
         return "editBook";
     }
 
@@ -90,19 +91,15 @@ public class EditController {
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
-
         if (!file.isEmpty()) {
             try {
                 // サムネイル画像をアップロード
                 String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
                 // URLを取得
                 String thumbnailUrl = thumbnailService.getURL(fileName);
-
                 editBookInfo.setThumbnailName(fileName);
                 editBookInfo.setThumbnailUrl(thumbnailUrl);
-
             } catch (Exception e) {
-
                 // 異常終了時の処理
                 logger.error("サムネイルアップロードでエラー発生", e);
                 model.addAttribute("bookDetailsInfo", editBookInfo);
@@ -113,7 +110,6 @@ public class EditController {
         //バリデーションチェック
         //ISBNが10または13桁の数字
         boolean isValidIsbn = isbn.matches("[0-9]{10}||[0-9]{13}");
-
         if (!isValidIsbn) {
             model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
             return "addBook";
@@ -132,17 +128,21 @@ public class EditController {
         // 書籍情報を編集する
         //TODOここ
         booksService.editBook(editBookInfo);
-
         model.addAttribute("resultMessage", "登録完了");
 
         //編集した書籍の詳細情報を表示するように実装
         //bookdetailsinfo型の新しい変数作る
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
 
+        //貸出ステータス表示
+        int rent = rentBookService.getRentNum(bookId);
+        if (rent == 0) {
+            model.addAttribute("rentalStatus", "貸し出し可");
+        } else {
+            model.addAttribute("rentalStatus", "貸し出し中");
+        }
         //  詳細画面に遷移する
         return "details";
     }
-
 }
