@@ -34,13 +34,11 @@ public class BooksService {
      * @return 書籍リスト
      */
     public List<BookInfo> getBookList() {
-
         // TODO 取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
                 "select book_id,title,author,publisher,publish_date,thumbnail_url, isbn, description"
                         + " from books order by title asc",
                 new BookInfoRowMapper());
-
         return getedBookList;
     }
 
@@ -52,13 +50,10 @@ public class BooksService {
      */
     //BookDetailsInfoは型
     public BookDetailsInfo getBookInfo(int bookId) {
-
         // JSPに渡すデータを設定する
         String sql = "SELECT * FROM books where book_id ="
                 + bookId;
-
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
-
         return bookDetailsInfo;
     }
 
@@ -78,9 +73,7 @@ public class BooksService {
                 + "',description='" + editBookInfo.getDescription()
                 + "'  WHERE book_id=" + editBookInfo.getBookId() + ";";
         jdbcTemplate.update(sql);
-        
     }
-
 
     /**
      * 書籍を登録する
@@ -100,28 +93,24 @@ public class BooksService {
                 + "sysdate())";
         //SQLの内容をデータベースに投げる
         jdbcTemplate.update(sql);
-
     }
 
-    //登録した書籍情報を書籍登録画面（addbook.jsp）で表示するためにSQLからデータ情報を引き出す
+    /**
+     * 追加した書籍情報を取得
+     * @return 書籍情報
+     */
     public int newRegistBook() {
-
         String sql = "select max(book_id) from books";
-
         int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
         return bookId;
     }
-
 
     /**
      * 書籍を削除する
      * @param bookId　書籍情報
      */
     public void deletingBook(int bookId) {
-
         String sql = "delete from books where book_id =" + bookId;
         jdbcTemplate.update(sql);
-
     }
-
 }

@@ -21,7 +21,6 @@ import jp.co.seattle.library.service.RentBookService;
 @Controller //APIの入り口
 public class DeleteBookController {
     final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
-
     @Autowired
     private BooksService booksService;
     @Autowired
@@ -42,19 +41,14 @@ public class DeleteBookController {
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
         //サービスクラスを使用するコード
-        int rent = rentBookService.getListInfo(bookId);
-        if (rent == 0) {
-            booksService.deletingBook(bookId);
-            model.addAttribute("bookList", booksService.getBookList());
-
-        } else {
+        int rent = rentBookService.getRentNum(bookId);
+        if (rent == 1) {
             model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-            model.addAttribute("noRent", "貸出中の本は削除できません");
+            model.addAttribute("rentalStatus", "貸出中の本は削除できません");
             return "details";
         }
-
+        booksService.deletingBook(bookId);
+        model.addAttribute("bookList", booksService.getBookList());
         return "home";
-
     }
-
 }

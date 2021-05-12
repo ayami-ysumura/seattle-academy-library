@@ -18,12 +18,17 @@ import jp.co.seattle.library.service.RentBookService;
 @Controller
 public class ReturnController {
     final static Logger logger = LoggerFactory.getLogger(RentBookController.class);
-
     @Autowired
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
-
+    /**
+     * 書籍を返す
+     * @param locale
+     * @param bookId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
     public String returnBook(Locale locale,
             @RequestParam("bookId") int bookId,
@@ -31,19 +36,13 @@ public class ReturnController {
         logger.info("Welcome rentBooks.java! The client locale is {}.", locale);
         BookDetailsInfo returnBookInfo = new BookDetailsInfo();
         returnBookInfo.setBookId(bookId);
-        int rent = rentBookService.getListInfo(bookId);
+        int rent = rentBookService.getRentNum(bookId);
         if (rent == 1) {
             rentBookService.returnBook(returnBookInfo);
-            BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-            model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-            model.addAttribute("okRent", "貸し出し可");
-
-        } else {
-            BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-            model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-            model.addAttribute("okRent", "貸し出し可");
         }
-
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
+        model.addAttribute("bookDetailsInfo", bookDetailsInfo);
+        model.addAttribute("rentalStatus", "貸し出し可");
         return "details";
     }
 }

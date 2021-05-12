@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 
+/**
+ * 貸出サービス
+ * @author user
+ *
+ */
 @Service
 public class RentBookService {
     final static Logger logger = LoggerFactory.getLogger(RentBookService.class);
@@ -20,7 +25,7 @@ public class RentBookService {
      * @param bookId
      * @return 貸出情報
      */
-    public int getListInfo(int bookId) {
+    public int getRentNum(int bookId) {
         String sql = "SELECT COUNT(*) FROM rent_books where book_id=" + bookId;
         int getListedInfo = jdbcTemplate.queryForObject(sql, Integer.class);
         return getListedInfo;
@@ -45,5 +50,4 @@ public class RentBookService {
         String sql = "delete from rent_books where book_id =" + returnBookInfo.getBookId();
         jdbcTemplate.update(sql);
     }
-
 }

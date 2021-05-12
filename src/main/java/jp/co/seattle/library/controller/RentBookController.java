@@ -21,12 +21,10 @@ import jp.co.seattle.library.service.RentBookService;
 @Controller
 public class RentBookController {
     final static Logger logger = LoggerFactory.getLogger(RentBookController.class);
-
     @Autowired
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
-
     /**
      * 書籍を借りる
      * @param locale
@@ -43,22 +41,13 @@ public class RentBookController {
         BookDetailsInfo rentBookInfo = new BookDetailsInfo();
         rentBookInfo.setBookId(bookId);
         //bookIdを貸出リストに追加
-        int rent = rentBookService.getListInfo(bookId);
+        int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
             rentBookService.rentInfo(rentBookInfo);
-            model.addAttribute("noRent", "貸し出し中");
-            BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-            model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-
-        } else {
-            BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-            model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-            model.addAttribute("noRent", "貸し出し中");
-
         }
-
-
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
+        model.addAttribute("bookDetailsInfo", bookDetailsInfo);
+        model.addAttribute("rentalStatus", "貸し出し中");
         return "details";
     }
-
 }

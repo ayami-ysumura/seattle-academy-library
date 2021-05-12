@@ -42,8 +42,7 @@
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
-                <div>${noRent}</div>
-                <div>${okRent}</div>
+                <div>${rentalStatus}</div>
             </div>
             <div class="content_right">
                 <div>
