@@ -111,7 +111,7 @@ public class EditController {
         //ISBNが10または13桁の数字
         boolean isValidIsbn = isbn.matches("[0-9]{10}||[0-9]{13}");
         if (!isValidIsbn) {
-            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
+            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません");
             return "addBook";
         }
 
@@ -121,7 +121,7 @@ public class EditController {
             df.setLenient(false);
             df.format(df.parse(publishDate));
         } catch (ParseException e) {
-            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
+            model.addAttribute("errorMessage", "出版日は半角数字のYYYYMMDD形式で入力してください");
             return "addBook";
         }
 

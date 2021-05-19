@@ -84,8 +84,8 @@ public class BooksService {
         //SQLと繋がってるところ（括弧内はSQLのカラム名と同じじゃなきゃ追加できない）
         String sql = "INSERT INTO books (title, author,publisher,thumbnail_url,thumbnail_name,publish_date,isbn,description,reg_date,upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
-                + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getPublishDate() + "','"
                 + bookInfo.getIsbn() + "','"
                 + bookInfo.getDescription() + "',"

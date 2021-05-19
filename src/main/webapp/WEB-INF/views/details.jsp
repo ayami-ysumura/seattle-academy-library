@@ -38,7 +38,7 @@
                     <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${empty bookDetailsInfo.thumbnailUrl}">
                             <img class="book_noimg" src="resources/img/noImg.png">
                         </c:if> <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
-                            <img class="book_noimg" src="resources/img/noImg.png">
+                            <img class="book_img" src="${bookDetailsInfo.thumbnailUrl}">
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
