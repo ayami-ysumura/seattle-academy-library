@@ -92,12 +92,15 @@ public class AddBooksController {
                 return "addBook";
             }
         }
-
+        if (title.isEmpty() || author.isEmpty() || publisher.isEmpty() || publishDate.isEmpty()) {
+            model.addAttribute("errorMessage", "必須項目が未入力のため登録できません");
+            return "addBook";
+        }
         //バリデーションチェック
         //ISBNが10または13桁の数字
         boolean isValidIsbn = isbn.matches("[0-9]{10}||[0-9]{13}");
         if (!isValidIsbn) {
-            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
+            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません");
             return "addBook";
         }
         //日付チェック8桁＆日付の数字が日付として成り立たないものをはじく
@@ -106,7 +109,7 @@ public class AddBooksController {
             df.setLenient(false);
             df.format(df.parse(publishDate));
         } catch (ParseException e) {
-            model.addAttribute("errorMessage", "ISBNの桁数または半角数字が正しくありません出版日は半角数字のYYYYMMDD形式で入力してください");
+            model.addAttribute("errorMessage", "出版日は半角数字のYYYYMMDD形式で入力してください");
             return "addBook";
         }
 

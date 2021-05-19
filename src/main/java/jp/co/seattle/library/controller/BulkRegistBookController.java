@@ -87,7 +87,7 @@ public class BulkRegistBookController {
                 //ここからバリデーションチェック
                     //titleまたはauthorまたはpublisherどれかが空だった時
                     if (splitLine[0].isEmpty() || splitLine[1].isEmpty() || splitLine[2].isEmpty()) {
-                        erorrList.add(list.size() + "冊目のタイトル、著者名、出版社のいずれかが空です");
+                        erorrList.add(list.size() + "冊目の書籍情報に不備があります");
                     }
                     //ISBNが10または13桁の数字
                     boolean isValidIsbn = splitLine[4].matches("[0-9]{10}||[0-9]{13}");
@@ -100,7 +100,7 @@ public class BulkRegistBookController {
                         df.setLenient(false);
                         df.format(df.parse(splitLine[3]));
                     } catch (ParseException e) {
-                        erorrList.add(list.size() + "冊目の日付がおかしいです");
+                        erorrList.add(list.size() + "冊目の日付に不備があります");
                     }
                 }
                 input.close();
