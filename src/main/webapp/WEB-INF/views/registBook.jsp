@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/thumbnail.js"></script>
 <script src="resources/js/addBtn.js"></script>
+<script src="resources/js/removeUserId.js"></script>
 </head>
 <body class="wrapper">
     <header>
@@ -24,15 +25,15 @@
                 
         </div>
         <div class="right">
-                
             <ul>
-                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>         
-                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>       
+                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a> <input type="hidden" name="userId" value="${userId}"></li>         
+                <li><a href="<%=request.getContextPath()%>/" id="remove">ログアウト</a></li>       
             </ul>
         </div>
     </header>
     <main>
         <form action="<%=request.getContextPath()%>/bulkRegistBook" method="post" enctype="multipart/form-data" id="data_upload_form">
+            <input type="hidden" name="userId" value="${userId}">
             <h1>一括登録</h1>
             <div class="bulk_form">
                 <p>CSVファイルをアップロードすることで書籍を一括で登録できます</p>

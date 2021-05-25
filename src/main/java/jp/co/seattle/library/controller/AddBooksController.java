@@ -37,6 +37,7 @@ public class AddBooksController {
     public String login(Model model) {
         return "addBook";
     }
+    
     /**
      * 書籍情報を登録する
      * @param locale ロケール情報
@@ -47,6 +48,7 @@ public class AddBooksController {
      * @param isbn ISBN
      * @param file サムネイルファイル
      * @param description 書籍説明
+     * @param userId ユーザーID
      * @param model モデル
      * @return 遷移先画面
      */
@@ -61,6 +63,7 @@ public class AddBooksController {
             @RequestParam("thumbnail") MultipartFile file,
             @RequestParam("isbn") String isbn,
             @RequestParam("description") String description,
+            @RequestParam("userId") int userId,
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
@@ -74,6 +77,7 @@ public class AddBooksController {
         bookInfo.setPublishDate(publishDate);
         bookInfo.setIsbn(isbn);
         bookInfo.setDescription(description);
+        
         
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -118,10 +122,17 @@ public class AddBooksController {
         model.addAttribute("resultMessage", "登録完了");
         // TODO 登録した書籍の詳細情報を表示するように実装
         //bookdetailsinfo型の新しい変数作る
-        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(booksService.newRegistBook());
+        int MaxId = booksService.newRegistBook();
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(MaxId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         //貸出ステータス表示
         model.addAttribute("rentalStatus", "貸し出し可");
+        int favo = bookDetailsInfo.getFavoCount();
+        if (favo == 1) {
+            model.addAttribute("favo", "disabled");
+        } else {
+            model.addAttribute("noFavo", "disabled");
+        }
         //  詳細画面に遷移する
         return "details";
     }

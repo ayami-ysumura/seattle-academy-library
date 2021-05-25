@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
-import jp.co.seattle.library.service.ThumbnailService;
 
 /**
  * @author user
@@ -40,16 +39,12 @@ public class BulkRegistBookController {
     @Autowired
     private BooksService booksService;
 
-    @Autowired
-    private ThumbnailService thumbnailService;
-
     //①home.jspの一括登録ボタンからここにつながる
     @RequestMapping(value = "/registBook", method = RequestMethod.GET) //value＝actionで指定したパラメータ
 
     public String bulkBook(Locale locale,
             Model model) {
         logger.info("Welcome registBook.java! The client locale is {}.", locale);
-
         return "registBook";
     }
 

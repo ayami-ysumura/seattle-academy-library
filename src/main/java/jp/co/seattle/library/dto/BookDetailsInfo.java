@@ -30,6 +30,8 @@ public class BookDetailsInfo {
 
     private String description;
 
+    private int favoCount;
+
     //コンストラクタ（タスク5関係あり）
     public BookDetailsInfo() {
 
@@ -38,7 +40,7 @@ public class BookDetailsInfo {
     //bookdtailsinforowmapperでsetした奴らとここの赤が繋がってる（引数）
     //コンストラクタ（タスク5は関係ない）
     public BookDetailsInfo(int bookId, String title, String author, String publisher, String publishDate,
-            String thumbnailUrl, String thumbnailName, String isbn, String description) {
+            String thumbnailUrl, String thumbnailName, String isbn, String description, int favoCount) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -48,6 +50,7 @@ public class BookDetailsInfo {
         this.thumbnailName = thumbnailName;
         this.isbn = isbn;
         this.description = description;
+        this.favoCount = favoCount;
     }
 
 }

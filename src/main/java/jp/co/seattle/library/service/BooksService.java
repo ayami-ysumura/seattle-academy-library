@@ -43,16 +43,16 @@ public class BooksService {
     }
 
     /**
-     * 書籍IDに紐づく書籍詳細情報を取得する
-     *
+     * 書籍IDに紐づく書籍詳細情報と、書籍IDとユーザーIDに紐づくお気に入り登録の数を取得する
      * @param bookId 書籍ID
+     * @param userId ユーザーID
      * @return 書籍情報
      */
     //BookDetailsInfoは型
-    public BookDetailsInfo getBookInfo(int bookId) {
+    public BookDetailsInfo getBookInfo(int bookId, int userId) {
         // JSPに渡すデータを設定する
-        String sql = "SELECT * FROM books where book_id ="
-                + bookId;
+        String sql = "select book_id,title,author,publisher,publish_date,thumbnail_url,thumbnail_name,isbn,description,(select count(*) from favorites where book_id="
+                + bookId + " and user_id =" + userId + ") as favo_count FROM books where book_id =" + bookId;
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
         return bookDetailsInfo;
     }

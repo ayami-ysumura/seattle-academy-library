@@ -45,7 +45,7 @@ public class UsersService {
      */
     public UserInfo selectUserInfo(String email, String password) {
         // TODO SQL生成
-        String sql = "select id, email, password from users where email = '" + email + "'and password = '"
+        String sql = "select user_id, email, password from users where email = '" + email + "'and password = '"
                 + password
                 + "'";
 
@@ -57,6 +57,19 @@ public class UsersService {
             return null;
         }
 
+    }
+
+    /**
+     * @param email
+     * @param password
+     * @return userId
+     */
+    public int getUserId(String email, String password) {
+        String sql = "select user_id from users where email = '" + email + "' and password = '"
+                + password
+                + "'";
+        int userId = jdbcTemplate.queryForObject(sql, Integer.class);
+        return userId;
     }
 
 }

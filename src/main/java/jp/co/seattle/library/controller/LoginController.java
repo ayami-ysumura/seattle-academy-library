@@ -1,5 +1,7 @@
 package jp.co.seattle.library.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,19 +44,18 @@ public class LoginController {
     public String login(
             @RequestParam("email") String email,
             @RequestParam("password") String password,
+            HttpServletRequest request,
             Model model) {
 
         // TODO 下記のコメントアウトを外してサービスクラスを使用してください。
         UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
-
+        int selectedUserId = usersService.getUserId(email, password);
         // TODO パスワードとメールアドレスの組み合わせ存在チェック実装
         if (selectedUserInfo == null) {
             model.addAttribute("errorMessage", "アカウントが存在しません");
             return "login";
-
         }
-
-
+        model.addAttribute("userId", selectedUserId);
         // 本の情報を取得して画面側に渡す
         model.addAttribute("bookList", booksService.getBookList());
         return "home";

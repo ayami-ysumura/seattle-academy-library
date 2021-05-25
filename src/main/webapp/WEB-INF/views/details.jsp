@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="resources/css/lightbox.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/lightbox.js" /></script>
+<script src="resources/js/getUserId.js" /></script>
+<script src="resources/js/removeUserId.js"></script>
 </head>
 <body class="wrapper">
     <header>
@@ -24,8 +26,8 @@
         </div>
         <div class="right">
             <ul>
-                <li><a href="<%= request.getContextPath()%>/home" class="menu">Home</a></li>
-                <li><a href="<%= request.getContextPath()%>/">ログアウト</a></li>
+                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
+                <li><a href="<%=request.getContextPath()%>/" id="remove">ログアウト</a></li>
             </ul>
         </div>
     </header>
@@ -72,17 +74,32 @@
             </div>
         </div>
         <div class="edtDelBookBtn_box">
-            <form method="post" action="rentBook"> 
+            <form method="post" action="rentBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook">借りる</button>
+                <input type="hidden" name="userId" class="get_userId" value="${userId}">
             </form>
             <form method="post" action="returnBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook">返す</button>
+                <input type="hidden" name="userId" class="get_userId" value="${userId}">
             </form>
             <form method="post" action="editBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
+                <input type="hidden" name="userId" class="get_userId" value="${userId}">
             </form>
             <form method="post" action="deleteBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook">削除</button>
+                <input type="hidden" name="userId" class="get_userId" value="${userId}">
+            </form>
+        </div>
+        <div class="edtDelBookBtn_box">
+            <p>お気に入り</p>
+            <form method="post" action="favorite">
+                <button id="a" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" ${favo}>登録</button>
+                <input type="hidden" name="userId" value="${userId}" class="get_userId">
+            </form>
+            <form method="post" action="noFavorite">
+                <button id="b" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" ${noFavo}>解除</button>
+                <input type="hidden" name="userId" value="${userId}" class="get_userId">
             </form>
         </div>
     </main>
