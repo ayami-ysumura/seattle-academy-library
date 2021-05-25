@@ -58,7 +58,12 @@ public class UsersService {
         }
 
     }
-    ////userIdを取得
+
+    /**
+     * @param email
+     * @param password
+     * @return userId
+     */
     public int getUserId(String email, String password) {
         String sql = "select user_id from users where email = '" + email + "' and password = '"
                 + password
