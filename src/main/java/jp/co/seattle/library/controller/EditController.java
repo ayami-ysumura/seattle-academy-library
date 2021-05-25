@@ -36,16 +36,25 @@ public class EditController {
     private RentBookService rentBookService;
     @Autowired
     private ThumbnailService thumbnailService;
-
+    @Autowired
+    private BookDetailsInfo bookDetailsInfo;
     //①details.jspの編集ボタンからここにつながる
+    /**
+     * @param bookId 書籍ID
+     * @param userId ユーザーID
+     * @param model
+     * @return 遷移先画面
+     */
     @RequestMapping(value = "/editBook", method = RequestMethod.POST) //value＝actionで指定したパラメータ
     //RequestParamでname属性を取得(bookIdを取得)
     public String editBook(//Locale locale,
             @RequestParam("bookId") int bookId,
+            @RequestParam("userId") int userId,
             Model model) {
         //        logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
-        BookDetailsInfo beforeBookInfo = booksService.getBookInfo(bookId);
+        BookDetailsInfo beforeBookInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", beforeBookInfo);
+        //model.addAttribute("userId", userId);
         return "editBook";
     }
 
@@ -59,6 +68,7 @@ public class EditController {
      * @param isbn ISBN
      * @param file サムネイルファイル
      * @param description 書籍説明
+     * @param userId ユーザーID
      * @param model モデル
      * @return 遷移先画面
      */
@@ -74,9 +84,16 @@ public class EditController {
             @RequestParam("thumbnail") MultipartFile file,
             @RequestParam("isbn") String isbn,
             @RequestParam("description") String description,
+            @RequestParam("userId") int userId,
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
+        int favo = bookDetailsInfo.getFavoCount();
+        if (favo == 1) {
+            model.addAttribute("favo", "disabled");
+        } else {
+            model.addAttribute("noFavo", "disabled");
+        }
         // パラメータで受け取った書籍情報をDtoに格納する。
         //bookInfoのフィールドがpivateだからsetする
         //インスタンス化。ピンクはインスタンス名。（クラス名　インスタンス名　＝new　コンストラクタ）
@@ -132,7 +149,7 @@ public class EditController {
 
         //編集した書籍の詳細情報を表示するように実装
         //bookdetailsinfo型の新しい変数作る
-        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
 
         //貸出ステータス表示
@@ -142,6 +159,7 @@ public class EditController {
         } else {
             model.addAttribute("rentalStatus", "貸し出し中");
         }
+        //model.addAttribute("userId", userId);
         //  詳細画面に遷移する
         return "details";
     }

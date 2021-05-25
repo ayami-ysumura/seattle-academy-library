@@ -11,7 +11,6 @@
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="resources/js/setUserId.js"></script>
 <script src="resources/js/getUserId.js"></script>
 <script src="resources/js/removeUserId.js"></script>
 </head>
@@ -23,27 +22,21 @@
         </div>
         <div class="right">
             <ul>
-                <li>
-                    <form method="post" action="favoriteList">
-                        <button type="submit" value="userId" name="userId" class="get_userId">★</button>
-                    </form>
-                </li>
-                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
+                <li><a href="<%= request.getContextPath()%>/home" class="menu">Home</a></li>
                 <li><a href="<%=request.getContextPath()%>/" id="remove">ログアウト</a></li>
             </ul>
         </div>
     </header>
     <main>
-        <h1>Home</h1>
-        <input type="hidden" id="userId" value="${userId}"> <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%= request.getContextPath()%>/registBook" class="btn_bulk_book">一括登録</a>
-        <div>${noBook}</div>
+        <h1>お気に入り一覧</h1>
+        <div>${noFavo}</div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
             </c:if>
             <div>
                 <div class="booklist">
-                    <c:forEach var="bookInfo" items="${bookList}">
+                    <c:forEach var="bookInfo" items="${favoList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                 <a href="javascript:void(0)" onclick="this.parentNode.submit();"> <c:if test="${empty bookInfo.thumbnail}">

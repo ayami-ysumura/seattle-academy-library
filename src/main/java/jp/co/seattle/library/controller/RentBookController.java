@@ -25,16 +25,21 @@ public class RentBookController {
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
+    @Autowired
+    private BookDetailsInfo bookDetailsInfo;
+    
     /**
      * 書籍を借りる
      * @param locale
-     * @param bookId
+     * @param bookId 書籍ID
+     * @param userId ユーザーID
      * @param model
-     * @return
+     * @return details
      */
     @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
     public String rentBook(Locale locale,
             @RequestParam("bookId") int bookId,
+            @RequestParam("userId") int userId,
             Model model) {
         logger.info("Welcome rentBooks.java! The client locale is {}.", locale);
         //bookIdをセット
@@ -45,9 +50,16 @@ public class RentBookController {
         if (rent == 0) {
             rentBookService.rentBook(rentBookInfo);
         }
-        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
+        int favo = bookDetailsInfo.getFavoCount();
+        if (favo == 1) {
+            model.addAttribute("favo", "disabled");
+        } else {
+            model.addAttribute("noFavo", "disabled");
+        }
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         model.addAttribute("rentalStatus", "貸し出し中");
+        //model.addAttribute("userId", userId);
         return "details";
     }
 }

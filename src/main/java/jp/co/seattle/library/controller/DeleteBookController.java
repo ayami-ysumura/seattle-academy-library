@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBookService;
 
@@ -25,11 +26,15 @@ public class DeleteBookController {
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
+    @Autowired
+    private BookDetailsInfo bookDetailsInfo;
+    
     /**
      * 対象書籍を削除する
      *
      * @param locale ロケール情報
      * @param bookId 書籍ID
+     * @param userId ユーザーID
      * @param model モデル情報
      * @return 遷移先画面名
      */
@@ -38,13 +43,21 @@ public class DeleteBookController {
     public String deleteBook(
             Locale locale,
             @RequestParam("bookId") Integer bookId,
+            @RequestParam("userId") int userId,
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
         //サービスクラスを使用するコード
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 1) {
-            model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+            int favo = bookDetailsInfo.getFavoCount();
+            if (favo == 1) {
+                model.addAttribute("favo", "disabled");
+            } else {
+                model.addAttribute("noFavo", "disabled");
+            }
+            model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
             model.addAttribute("rentalStatus", "貸出中の本は削除できません");
+            model.addAttribute("userId", userId);
             return "details";
         }
         booksService.deletingBook(bookId);

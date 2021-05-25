@@ -1,5 +1,7 @@
 package jp.co.seattle.library.controller;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,18 @@ public class HomeController {
 
     @Autowired
     private BooksService booksService;
-
+    
     /**
      * Homeボタンからホーム画面に戻るページ
      * @param model
-     * @return
+     * @return home
      */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String transitionHome(Model model) {
+    public String transitionHome(Locale locale,
+            Model model) {
+        logger.info("Welcome HomeControler.java! The client locale is {}.", locale);
 
         model.addAttribute("bookList", booksService.getBookList());
         return "home";
     }
-
 }
