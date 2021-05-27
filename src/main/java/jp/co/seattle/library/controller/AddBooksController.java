@@ -129,9 +129,9 @@ public class AddBooksController {
         model.addAttribute("rentalStatus", "貸し出し可");
         int favo = bookDetailsInfo.getFavoCount();
         if (favo == 1) {
-            model.addAttribute("favo", "disabled");
+            model.addAttribute("favoStatus", "favo");
         } else {
-            model.addAttribute("noFavo", "disabled");
+            model.addAttribute("favoStatus", "noFavo");
         }
         //  詳細画面に遷移する
         return "details";
