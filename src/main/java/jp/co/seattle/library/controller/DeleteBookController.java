@@ -23,8 +23,6 @@ public class DeleteBookController {
     final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
     @Autowired
     private BooksService booksService;
-    //@Autowired
-    //private RentBookService rentBookService;
     @Autowired
     private BookDetailsInfo bookDetailsInfo;
     
@@ -47,19 +45,12 @@ public class DeleteBookController {
         logger.info("Welcome delete! The client locale is {}.", locale);
 
         booksService.deletingBook(bookId);
-        //サービスクラスを使用するコード
-        //int rent = rentBookService.getRentNum(bookId);
-        //if (rent == 1) {
         int favo = bookDetailsInfo.getFavoCount();
         if (favo == 1) {
             model.addAttribute("favoStatus", "noFavo");
         } else {
             model.addAttribute("favoStatus", "favo");
         }
-            //model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
-            //model.addAttribute("rentalStatus", "貸出中の本は削除できません");
-            //return "details";
-            //}
         model.addAttribute("bookList", booksService.getBookList());
         return "home";
     }
