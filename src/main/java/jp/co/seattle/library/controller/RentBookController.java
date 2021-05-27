@@ -25,8 +25,6 @@ public class RentBookController {
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
-    @Autowired
-    private BookDetailsInfo bookDetailsInfo;
     
     /**
      * 書籍を借りる
@@ -43,23 +41,18 @@ public class RentBookController {
             Model model) {
         logger.info("Welcome rentBooks.java! The client locale is {}.", locale);
         //bookIdをセット
-        BookDetailsInfo rentBookInfo = new BookDetailsInfo();
-        rentBookInfo.setBookId(bookId);
+
         //bookIdを貸出リストに追加
-        int rent = rentBookService.getRentNum(bookId);
-        if (rent == 0) {
-            rentBookService.rentBook(rentBookInfo);
-        }
+        rentBookService.rentBook(bookId);
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         int favo = bookDetailsInfo.getFavoCount();
         if (favo == 1) {
-            model.addAttribute("favo", "disabled");
+            model.addAttribute("favoStatus", "favo");
         } else {
-            model.addAttribute("noFavo", "disabled");
+            model.addAttribute("favoStatus", "noFavo");
         }
-        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         model.addAttribute("rentalStatus", "貸し出し中");
-        //model.addAttribute("userId", userId);
         return "details";
     }
 }

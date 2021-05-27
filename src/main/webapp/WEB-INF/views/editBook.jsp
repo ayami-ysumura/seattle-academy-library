@@ -16,6 +16,7 @@
 <script src="resources/js/thumbnail.js"></script>
 <script src="resources/js/addBtn.js"></script>
 <script src="resources/js/removeUserId.js"></script>
+<script src="resources/js/getUserId.js" /></script>
 </head>
 <body class="wrapper">
     <header>            
@@ -104,6 +105,7 @@
             </div>
             <div class="addBookBtn_box">
                 <button type="submit" id="add-btn" class="btn_addBook">更新</button>
+                <input type="hidden" name="userId" value="${userId}" class="get_userId">
             </div>
         </form>
     </main>

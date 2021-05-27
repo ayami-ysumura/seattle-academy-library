@@ -22,8 +22,6 @@ public class ReturnController {
     private BooksService booksService;
     @Autowired
     private RentBookService rentBookService;
-    @Autowired
-    private BookDetailsInfo bookDetailsInfo;
     
     /**
      * 書籍を返す
@@ -39,22 +37,17 @@ public class ReturnController {
             @RequestParam("userId") int userId,
             Model model) {
         logger.info("Welcome rentBooks.java! The client locale is {}.", locale);
-        BookDetailsInfo returnBookInfo = new BookDetailsInfo();
-        returnBookInfo.setBookId(bookId);
-        int rent = rentBookService.getRentNum(bookId);
-        if (rent == 1) {
-            rentBookService.returnBook(returnBookInfo);
-        }
+
+        rentBookService.returnBook(bookId);
+        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         int favo = bookDetailsInfo.getFavoCount();
         if (favo == 1) {
-            model.addAttribute("favo", "disabled");
+            model.addAttribute("favoStatus", "favo");
         } else {
-            model.addAttribute("noFavo", "disabled");
+            model.addAttribute("favoStatus", "noFavo");
         }
-        BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         model.addAttribute("rentalStatus", "貸し出し可");
-        //model.addAttribute("email", userId);
         return "details";
     }
 }

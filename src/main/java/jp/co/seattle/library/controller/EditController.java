@@ -36,8 +36,7 @@ public class EditController {
     private RentBookService rentBookService;
     @Autowired
     private ThumbnailService thumbnailService;
-    @Autowired
-    private BookDetailsInfo bookDetailsInfo;
+
     //①details.jspの編集ボタンからここにつながる
     /**
      * @param bookId 書籍ID
@@ -51,10 +50,9 @@ public class EditController {
             @RequestParam("bookId") int bookId,
             @RequestParam("userId") int userId,
             Model model) {
-        //        logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
+
         BookDetailsInfo beforeBookInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", beforeBookInfo);
-        //model.addAttribute("userId", userId);
         return "editBook";
     }
 
@@ -88,12 +86,7 @@ public class EditController {
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-        int favo = bookDetailsInfo.getFavoCount();
-        if (favo == 1) {
-            model.addAttribute("favo", "disabled");
-        } else {
-            model.addAttribute("noFavo", "disabled");
-        }
+
         // パラメータで受け取った書籍情報をDtoに格納する。
         //bookInfoのフィールドがpivateだからsetする
         //インスタンス化。ピンクはインスタンス名。（クラス名　インスタンス名　＝new　コンストラクタ）
@@ -151,7 +144,12 @@ public class EditController {
         //bookdetailsinfo型の新しい変数作る
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-
+        int favo = bookDetailsInfo.getFavoCount();
+        if (favo == 1) {
+            model.addAttribute("favoStatus", "favo");
+        } else {
+            model.addAttribute("favoStatus", "noFavo");
+        }
         //貸出ステータス表示
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
@@ -159,7 +157,6 @@ public class EditController {
         } else {
             model.addAttribute("rentalStatus", "貸し出し中");
         }
-        //model.addAttribute("userId", userId);
         //  詳細画面に遷移する
         return "details";
     }

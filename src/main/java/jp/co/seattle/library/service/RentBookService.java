@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import jp.co.seattle.library.dto.BookDetailsInfo;
-
 /**
  * 貸出サービス
  * @author user
@@ -36,8 +34,8 @@ public class RentBookService {
      * 
      * @param rentBookInfo
      */
-    public void rentBook(BookDetailsInfo rentBookInfo) {
-        String sql = "INSERT INTO rent_books (book_id) VALUES (" + rentBookInfo.getBookId() + ")";
+    public void rentBook(int bookId) {
+        String sql = "INSERT INTO rent_books (book_id) VALUES (" + bookId + ")";
         jdbcTemplate.update(sql);
     }
 
@@ -46,8 +44,8 @@ public class RentBookService {
      * 
      * @param returnBookInfo
      */
-    public void returnBook(BookDetailsInfo returnBookInfo) {
-        String sql = "delete from rent_books where book_id =" + returnBookInfo.getBookId();
+    public void returnBook(int bookId) {
+        String sql = "delete from rent_books where book_id =" + bookId;
         jdbcTemplate.update(sql);
     }
 }
