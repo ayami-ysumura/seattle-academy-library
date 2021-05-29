@@ -45,12 +45,7 @@ public class DeleteBookController {
         logger.info("Welcome delete! The client locale is {}.", locale);
 
         booksService.deletingBook(bookId);
-        int favo = bookDetailsInfo.getFavoCount();
-        if (favo == 1) {
-            model.addAttribute("favoStatus", "noFavo");
-        } else {
-            model.addAttribute("favoStatus", "favo");
-        }
+        model.addAttribute("favoStatus", bookDetailsInfo.getFavoCount());
         model.addAttribute("bookList", booksService.getBookList());
         return "home";
     }

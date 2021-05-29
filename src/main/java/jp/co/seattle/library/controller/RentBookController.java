@@ -45,12 +45,7 @@ public class RentBookController {
         //bookIdを貸出リストに追加
         rentBookService.rentBook(bookId);
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
-        int favo = bookDetailsInfo.getFavoCount();
-        if (favo == 1) {
-            model.addAttribute("favoStatus", "favo");
-        } else {
-            model.addAttribute("favoStatus", "noFavo");
-        }
+        model.addAttribute("favoStatus", bookDetailsInfo.getFavoCount());
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         model.addAttribute("rentalStatus", "貸し出し中");
         return "details";

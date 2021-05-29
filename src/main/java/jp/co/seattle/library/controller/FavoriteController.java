@@ -44,7 +44,7 @@ public class FavoriteController {
         favoriteService.favoRegist(bookId, userId);
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
         model.addAttribute("userId", userId);
-        model.addAttribute("favoStatus", "favo");
+        model.addAttribute("favoStatus", "1");
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
             model.addAttribute("rentalStatus", "貸し出し可");
@@ -72,7 +72,7 @@ public class FavoriteController {
         favoriteService.favoDelete(bookId, userId);
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
         model.addAttribute("userId", userId);
-        model.addAttribute("favoStatus", "noFavo");
+        model.addAttribute("favoStatus", "0");
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
             model.addAttribute("rentalStatus", "貸し出し可");

@@ -32,7 +32,7 @@ public class RentBookService {
     /**
      * 書籍IDを貸出リストに追加
      * 
-     * @param rentBookInfo
+     * @param bookId 書籍ID
      */
     public void rentBook(int bookId) {
         String sql = "INSERT INTO rent_books (book_id) VALUES (" + bookId + ")";
@@ -42,7 +42,7 @@ public class RentBookService {
     /**
      * 貸出リスト内の貸出書籍を削除
      * 
-     * @param returnBookInfo
+     * @param bookId 書籍ID
      */
     public void returnBook(int bookId) {
         String sql = "delete from rent_books where book_id =" + bookId;

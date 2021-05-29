@@ -144,12 +144,7 @@ public class EditController {
         //bookdetailsinfo型の新しい変数作る
         BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId, userId);
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
-        int favo = bookDetailsInfo.getFavoCount();
-        if (favo == 1) {
-            model.addAttribute("favoStatus", "favo");
-        } else {
-            model.addAttribute("favoStatus", "noFavo");
-        }
+        model.addAttribute("favoStatus", bookDetailsInfo.getFavoCount());
         //貸出ステータス表示
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
