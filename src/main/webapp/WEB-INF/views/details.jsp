@@ -17,6 +17,8 @@
 <script src="resources/js/lightbox.js" /></script>
 <script src="resources/js/getUserId.js" /></script>
 <script src="resources/js/removeUserId.js"></script>
+<script src="resources/js/rentStatus.js"></script>
+<script src="resources/js/favoriteStatus.js"></script>
 </head>
 <body class="wrapper">
     <header>
@@ -74,6 +76,7 @@
             </div>
         </div>
         <div class="edtDelBookBtn_box">
+            <input type="hidden" class="rentalStatus" value="${rentalStatus}">
             <form method="post" action="rentBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook">借りる</button>
                 <input type="hidden" name="userId" class="get_userId" value="${userId}">
@@ -92,13 +95,14 @@
             </form>
         </div>
         <div class="edtDelBookBtn_box">
+            <input type="hidden" class="favoStatus" value="${favoStatus}">
             <p>お気に入り</p>
             <form method="post" action="favorite">
-                <button id="a" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" ${favo}>登録</button>
+                <button class="favo" type="submit" value="${bookDetailsInfo.bookId}" name="bookId">登録</button>
                 <input type="hidden" name="userId" value="${userId}" class="get_userId">
             </form>
             <form method="post" action="noFavorite">
-                <button id="b" type="submit" value="${bookDetailsInfo.bookId}" name="bookId" ${noFavo}>解除</button>
+                <button class="noFavo" type="submit" value="${bookDetailsInfo.bookId}" name="bookId">解除</button>
                 <input type="hidden" name="userId" value="${userId}" class="get_userId">
             </form>
         </div>

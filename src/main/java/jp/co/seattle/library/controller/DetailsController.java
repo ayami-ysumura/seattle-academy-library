@@ -54,13 +54,7 @@ public class DetailsController {
         } else {
             model.addAttribute("rentalStatus", "貸し出し中");
         }
-        int favo = bookDetailsInfo.getFavoCount();
-        if (favo == 1) {
-            model.addAttribute("favo", "disabled");
-        } else {
-            model.addAttribute("noFavo", "disabled");
-        }
-        //model.addAttribute("userId", userId);
+        model.addAttribute("favoStatus", bookDetailsInfo.getFavoCount());
         return "details";
     }
 }

@@ -44,13 +44,13 @@ public class FavoriteController {
         favoriteService.favoRegist(bookId, userId);
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
         model.addAttribute("userId", userId);
+        model.addAttribute("favoStatus", "1");
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
             model.addAttribute("rentalStatus", "貸し出し可");
         } else {
             model.addAttribute("rentalStatus", "貸し出し中");
         }
-        model.addAttribute("favo", "disabled");
         return "details";
     }
 
@@ -72,13 +72,13 @@ public class FavoriteController {
         favoriteService.favoDelete(bookId, userId);
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId, userId));
         model.addAttribute("userId", userId);
+        model.addAttribute("favoStatus", "0");
         int rent = rentBookService.getRentNum(bookId);
         if (rent == 0) {
             model.addAttribute("rentalStatus", "貸し出し可");
         } else {
             model.addAttribute("rentalStatus", "貸し出し中");
         }
-        model.addAttribute("noFavo", "disabled");
         return "details";
     }
 }
